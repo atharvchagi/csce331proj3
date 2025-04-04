@@ -1,9 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
-    Test
-  </body>
+<head>
+    <title>Stock Analyzer</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function submitData() {
+            let stock = document.getElementById('stockTicker').value;
+            let dateRange = document.getElementById('dateRange').value;
+            let resolution = document.getElementById('resolution').value;
+            let statistic = document.getElementById('statistic').value;
+            let visualization = document.getElementById('visualization').value;
+            google.script.run.processStockData(stock, dateRange, resolution, statistic, visualization);
+            alert('Stock data submitted!');
+        }
+    </script>
+</head>
+<body>
+    <h2>Stock Analyzer</h2>
+    
+    <label for="stockTicker">Stock Ticker:</label>
+    <input type="text" id="stockTicker" placeholder="e.g., AAPL">
+    <br>
+    
+    <label for="dateRange">Date Range:</label>
+    <input type="text" id="dateRange" placeholder="e.g., 7d">
+    <br>
+
+    <label for="resolution">Resolution:</label>
+    <select id="resolution">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+    </select>
+    <br>
+
+    <label for="statistic">Statistic:</label>
+    <select id="statistic">
+        <option value="moving_average">Moving Average</option>
+        <option value="macd">MACD</option>
+        <option value="rsi">RSI</option>
+    </select>
+    <br>
+
+    <label for="visualization">Visualization Type:</label>
+    <select id="visualization">
+        <option value="table">Table</option>
+        <option value="chart">Chart</option>
+    </select>
+    <br>
+
+    <button onclick="submitData()">Generate</button>
+</body>
 </html>
