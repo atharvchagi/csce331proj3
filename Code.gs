@@ -72,10 +72,13 @@ function generateChart(stockTicker, dateRange1, dateRange2, resolution, statisti
     var chart_image = chart.getAs('image/png');
     var doc_body = doc.getBody();
     //doc.insertChart(chart);
-    doc_body.insertImage(1,chart_image);
+    var inserted_image = doc_body.insertImage(1,chart_image);
 
     spreadsheetUrl = ss.getUrl();
     doc_body.appendParagraph('Here is the link to the Google Spreadsheet: ' + spreadsheetUrl);
+
+
+    inserted_image.setLinkUrl(spreadsheetUrl);
     
 }
 
