@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stock Analyzer</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Stock Analyzer</h2>
+    <label for="stockTicker">Stock Ticker:</label>
+    <input type="text" id="stockTicker" placeholder="e.g., AAPL">
+    <br>
+    <br>
+    <label for="dateRange">Date Range:</label>
+    <br>
+    <input type="text" id="dateRange1" style="width: 70px; font-size: 10px;" placeholder="MM/DD/YYYY">
+    <input type="text" id="dateRange2" style="width: 70px; font-size: 10px;" placeholder="MM/DD/YYYY">
+    <br>
+    <br>
+
+    <label for="Resolution">Resolution:</label>
+    <div class="dropdown">
+      <select id="resolution" name="resolution">
+        <option value="Daily">Daily</option>
+        <option value="Weekly">Weekly</option>
+        <option value="Monthly">Monthly</option>
+        <option value="Yearly">Yearly</option>
+      </select>
+    </div>
+    <br>
+    
+    <label for="Resolution">Statistics:</label>
+    <div class="dropdown">
+      <select id="statistics" name="statistics">
+        <option value="None">None</option>
+        <option value="Moving Average">Moving Average</option>
+        <option value="MACD">MACD</option>
+        <option value="RSI">RSI</option>
+      </select>
+    </div>
+    <br>
+
+    <label for="Visualization Type">Visualization Type:</label>
+    <div class="dropdown">
+      <select id="visualization" name="visualization">
+        <option value="Chart">Chart</option>
+        <option value="Table">Table</option>
+      </select>
+    </div>
+    <br>
+    
+    <button onclick="generateChart()">Generate</button>
+    <script>
+      function generateChart() {
+        //get variables inputted from the user
+        let stockTicker = document.getElementById('stockTicker').value;
+        let dateRange1 = document.getElementById('dateRange1').value;
+        let dateRange2 = document.getElementById('dateRange2').value;
+        let resolution = document.getElementById('resolution').value;
+        let statistics = document.getElementById('statistics').value;
+        let visualization = document.getElementById('visualization').value;
+
+        //alert for debugging purposes
+        alert("stockTicker: " + stockTicker + " dateRange1: " + dateRange1 + " dateRange2: " + dateRange2 + " resolution: " + resolution + " statistics: " + statistics  + " visualization: " + visualization);
+
+        google.script.run.generateChart(stockTicker, dateRange1, dateRange2, resolution, statistics, visualization);
+      }
+    </script>
+
+</body>
+</html>
