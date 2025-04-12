@@ -73,7 +73,7 @@
         let visualization = document.getElementById('visualization').value;
 
         //alert for debugging purposes
-        alert("stockTicker: " + stockTicker + " dateRange1: " + dateRange1 + " dateRange2: " + dateRange2 + " resolution: " + resolution + " statistics: " + statistics  + " visualization: " + visualization);
+        //alert("stockTicker: " + stockTicker + " dateRange1: " + dateRange1 + " dateRange2: " + dateRange2 + " resolution: " + resolution + " statistics: " + statistics  + " visualization: " + visualization);
 
         google.script.run.generateChart(stockTicker, dateRange1, dateRange2, resolution, statistics, visualization);
       }
