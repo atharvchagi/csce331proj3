@@ -9,7 +9,7 @@
 function onOpen() {
   DocumentApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
       .createMenu('Stock Plotter')
-      .addItem('Show sidebar', 'showSidebar')
+      .addItem('Show Sidebar', 'showSidebar')
       .addToUi();
 }
 
@@ -56,19 +56,23 @@ function generateChart(stockTicker, dateRange1, dateRange2, resolution, statisti
       .setChartType(Charts.ChartType.LINE)
       .addRange(sheet.getRange('A:B'))
       .setPosition(5, 5, 0, 0)
-      .setOption('width', 576)
-      .setOption('height', 324)
+      .setOption('width', 480)
+      .setOption('height', 300)
       .setOption('title', chartTitle)
       .setOption('vAxis.title', "Share Price")
       .setOption('hAxis.title', "Date")
+      .setOption('hAxis', {slantedText: true, slantedTextAngle: 45})
       .build();
 
+    
+    
     sheet.insertChart(chart);
     
 
     //insert chart into google document
     //https://www.youtube.com/watch?v=ykFl0SE0rJE
     var doc = DocumentApp.getActiveDocument();
+    SpreadsheetApp.flush();
     var chart_image = chart.getAs('image/png');
     var doc_body = doc.getBody();
     //doc.insertChart(chart);
