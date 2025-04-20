@@ -196,6 +196,8 @@ function generateChart(stockTicker, attribute, dateRange1, dateRange2, resolutio
       }
     }
 
+    spreadsheetUrl = ss.getUrl();
+    doc_body.insertParagraph(1,'Here is the link to the Google Spreadsheet: ' + spreadsheetUrl);
   }
 
   //now calculate statistics and put them in sheets and doc
