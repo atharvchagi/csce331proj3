@@ -35,7 +35,15 @@ function generateChart(stockTicker, attribute, dateRange1, dateRange2, resolutio
   //Logger.log("visualization: " + visualization);
 
   var ui = DocumentApp.getUi();
-  ui.alert("Creating New Visual Representation\n\n" + "stockTicker: " + stockTicker + "\nattribute: " + attribute + "\ndateRange1: " + dateRange1 + "\ndateRange2: " + dateRange2 + "\nresolution: " + resolution + "\nindicators: " + indicators  + "\nstatistics: " + statistics  + "\nvisualization: " + visualization);
+  ui.alert("Creating New Visual Representation\n\n" + 
+           "Stock Ticker: " + stockTicker + 
+           "\nAttribute: " + attribute + 
+           "\nStart Date: " + dateRange1 + 
+           "\nEnd Date: " + dateRange2 + 
+           "\nResolution: " + resolution + 
+           "\nIndicators: " + indicators + 
+           "\nStatistics: " + statistics + 
+           "\nVisualization: " + visualization);
 
   //make the sheet and return the sheet so that it can be opened
   var ss = createStockSpreadsheet(stockTicker); //the spreadsheet that may have multiple pages
