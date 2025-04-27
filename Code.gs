@@ -66,6 +66,11 @@ function generateChart(stockTicker, attribute, dateRange1, dateRange2, resolutio
   + "DATE(" + dates2[2] + "," + dates2[0] + "," + dates2[1]+ "),"
   + resolution + ")");
 
+  var height = 300;
+  if (indicators != 0)
+  {
+    height = 320;
+  }
   
   //create chart from this data
   var chart = sheet.newChart()
@@ -74,7 +79,7 @@ function generateChart(stockTicker, attribute, dateRange1, dateRange2, resolutio
     .addRange(sheet.getRange('B:B'))
     .setPosition(5, 5, 0, 0)
     .setOption('width', 480)
-    .setOption('height', 320)
+    .setOption('height', height)
     .setOption('title', chartTitle)
     .setOption('vAxis.title', attribute_axis_name)
     .setOption('hAxis.title', "Date")
