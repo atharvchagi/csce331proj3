@@ -1,27 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
+  
     <title>Stock Plotter</title>
+    
     <style>
-        body {
-            background-color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
+      .card {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: 480px;
+        margin: auto;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        animation: gradientBG 8s ease infinite;
+        background: linear-gradient(-45deg, #398fcc, #b5d2e6, #398fcc);
+        background-size: 400% 400%;
+        
+      }
+      body, .card {
+        font-family: 'Roboto', sans-serif;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
         }
-        input, select, button {
-            margin: 10px;
-            padding: 10px;
-            font-size: 16px;
+        50% {
+          background-position: 100% 50%;
         }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      input, select, button {
+        margin: 10px;
+        padding: 10px;
+        font-size: 16px;
+      }
     </style>
 </head>
 <body>
   <!--Options for visualization-->
-  <h1>Stock Plotter</h1>
+  <div class="card">
+      <h1>Stock Plotter</h1>
   <b><label for="stockTicker">Stock Ticker:</label></b> <!--type in stock ticker to choose stock-->
-  <input type="text" id="stockTicker" placeholder="e.g., AAPL">
+  <input type="text" id="stockTicker" style="width: 160px;"  placeholder="e.g., AAPL">
   <br>
   <br>
   <b><label for="Attribute">Attribute:</label></b> <!--attribute dropdown, attribute is plotted in chart-->
@@ -77,9 +107,20 @@
   <br>
   
   <button onclick="generateChart()">Generate</button>
+  <div id="loadingMessage" style="display: none; font-weight: bold; color: #007bff;">
+    ⏳ Loading stock data...
+  </div>
   <script>
     function generateChart() {
-      //get variables inputted from the user
+      // Show loading message
+      document.getElementById('loadingMessage').style.display = 'block';
+
+      // Disable the button to prevent double-clicks
+      const generateBtn = document.querySelector("button");
+      generateBtn.disabled = true;
+      generateBtn.innerText = "Loading...";
+
+      // Gather user input
       let stockTicker = document.getElementById('stockTicker').value;
       let attribute = document.getElementById('attribute').value;
       let dateRange1 = document.getElementById('dateRange1').value;
@@ -90,7 +131,7 @@
       let moving_average = document.getElementById('Moving Average').checked;
       let rsi = document.getElementById('RSI').checked;
       let macd = document.getElementById('MACD').checked;
-      let indicators = moving_average + rsi * 2 + macd * 4; //binary code to represent indicators option
+      let indicators = moving_average + rsi * 2 + macd * 4;
 
       let max = document.getElementById('Max').checked;
       let min = document.getElementById('Min').checked;
@@ -99,15 +140,26 @@
       let start_price = document.getElementById('Start').checked;
       let end_price = document.getElementById('End').checked;
       let current_price = document.getElementById('Current').checked;
-      let statistics = max + min * 2 + avg * 4 + relative_price * 8 + start_price * 16 + end_price * 32 + current_price * 64; //binary code to represent statistics option
+      let statistics = max + min * 2 + avg * 4 + relative_price * 8 + start_price * 16 + end_price * 32 + current_price * 64;
 
-      //alert(indicators);
-      //alert for debugging purposes
-      //alert("stockTicker: " + stockTicker + " attribute: " + attribute + " dateRange1: " + dateRange1 + " dateRange2: " + dateRange2 + " resolution: " + resolution + " indicators: " + indicators  + " statistics: " + statistics  + " visualization: " + visualization);
-
-      google.script.run.generateChart(stockTicker, attribute, dateRange1, dateRange2, resolution, indicators, statistics, visualization);
+      // Run server-side code
+      google.script.run
+        .withSuccessHandler(() => {
+          document.getElementById('loadingMessage').style.display = 'none';
+          generateBtn.disabled = false;
+          generateBtn.innerText = "Generate";
+        })
+        .withFailureHandler((error) => {
+          document.getElementById('loadingMessage').style.display = 'none';
+          generateBtn.disabled = false;
+          generateBtn.innerText = "Generate";
+          alert("An error occurred: " + error.message);
+        })
+        .generateChart(stockTicker, attribute, dateRange1, dateRange2, resolution, indicators, statistics, visualization);
     }
   </script>
+  </div>
+
 
 </body>
 </html>
